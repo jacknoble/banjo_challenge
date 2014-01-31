@@ -7,6 +7,10 @@ gem 'rails', '3.2.15'
 
 gem 'sqlite3'
 
+gem 'figaro'
+gem 'addressable'
+gem 'rest-client'
+
 group :development, :test do
 	gem 'rspec-rails'
 end
