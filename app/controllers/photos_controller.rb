@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
   def index
-  	@photos = Photos.find_by_location
-  	render :index
+  	@response = Photo.search_by_location(params[:photo])
+  	render :json => @response
   end
 end
