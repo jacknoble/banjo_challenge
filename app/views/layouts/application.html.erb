@@ -6,7 +6,24 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">Banjo Challenge</a>
+      <form action="/photos" method = "get" class="navbar-search pull-left" style="display: inline;">
+				<input type="hidden" name="authenticity_toke" value="<%=form_authenticity_token%>"
+				<label for="photo_location">Latitude,logitude:</label>
+				<input class="search-query" type="text" id="photo_location" name="photo[location]">
+				<label for="photo_radius">Search Radius (in meters):</label>
+				<input class="search-query" type="text" id="photo_radius" name="photo[radius]" >
+				<input class="btn btn-primary" type="submit" value="Search">
+			</form>
+  </div>
+</div>
+
+
 
 <%= yield %>
 

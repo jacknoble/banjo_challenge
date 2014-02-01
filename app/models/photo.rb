@@ -1,7 +1,7 @@
 require 'addressable/uri'
 require 'rest-client'
 class Photo < ActiveRecord::Base
-  attr_accessible :image, :location_name
+  attr_accessible :image, :location_name, :location_id
 
 
   def self.find_by_coords(photo_params)
@@ -9,9 +9,8 @@ class Photo < ActiveRecord::Base
   	uri = self.create_search_uri(lat,lng,photo_params[:radius])
   	response = JSON.parse(RestClient.get(uri))
   	location_ids = response['data'].map {|loc| loc['id']}
-  	p location_ids
   	photos = []
-  	location_ids.each do |id|
+  	location_ids[0..4].each do |id|
   		photos.concat(Photo.find_by_location_id(id))
   	end
   	photos
@@ -24,15 +23,16 @@ class Photo < ActiveRecord::Base
   	response['data'].each do |photo|
   		image = photo['images']['standard_resolution']
   		location_name = photo['location']['name']
-  	 	photos << Photo.new(:image => image, :location_name => location_name)
+  	 	photo =  Photo.new(:image => image, :location_name => location_name, :location_id => id)
+  	 	photos << photo unless photo.nil?
   	end
-
+  	photos.reject! {|p| p.nil?}
   	photos
   end
 
   private
   	def self.parse_coords(location)
-  		coords = location.split('/')
+  		coords = location.split(',')
   	end
 
   	def self.location_id_uri(id)
@@ -54,6 +54,7 @@ class Photo < ActiveRecord::Base
 			  	:client_id => ENV["INSTAGRAM_ID"], 
 			  	:lat => lat,
 			  	:lng => lng,
+			  	:distact => radius.to_i
 		  }).to_s
   	end
 
