@@ -1,23 +1,30 @@
 require 'addressable/uri'
 require 'rest-client'
 class Photo < ActiveRecord::Base
-  attr_accessible :image
+  attr_accessible :image, :location_name
 
 
   def self.find_by_coords(photo_params)
   	lat, lng = self.parse_coords(photo_params[:location])
   	uri = self.create_search_uri(lat,lng,photo_params[:radius])
   	response = JSON.parse(RestClient.get(uri))
-  	Photo.find_by_location_id(response["data"][0]["id"])
+  	location_ids = response['data'].map {|loc| loc['id']}
+  	p location_ids
+  	photos = []
+  	location_ids.each do |id|
+  		photos.concat(Photo.find_by_location_id(id))
+  	end
+  	photos
   end
 
   def self.find_by_location_id(id)
   	uri = self.location_id_uri(id)
-  	response = RestClient.get(uri)
+  	response = JSON.parse(RestClient.get(uri))
   	photos = []
-  	response.each do |photo|
+  	response['data'].each do |photo|
   		image = photo['images']['standard_resolution']
-  	 	photos << Photo.new(:image => image)
+  		location_name = photo['location']['name']
+  	 	photos << Photo.new(:image => image, :location_name => location_name)
   	end
 
   	photos
