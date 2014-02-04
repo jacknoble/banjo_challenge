@@ -19,11 +19,11 @@
 	      	value="<%=form_authenticity_token%>">
 		      <div style="display: inline-block">
 						<label for="set_location">Latitude, logitude:</label>
-						<input class="search-query" type="text" id="set_location" name="set[location]" value="<%=(@set) ? "#{@set.lat}, #{@set.lng}" : ''%>">
+						<input class="search-query" placeholder='e.g. "37.4828, 122.2361"' type="text" id="set_location" name="set[location]" value="<%=(@set) ? "#{@set.lat}, #{@set.lng}" : ''%>">
 					</div>
 				 	<div style="display: inline-block">
 						<label for="set_radius">Search Radius (in km):</label>
-						<input class="search-query" type="text" id="set_radius" name="set[radius]" value="<%=(@set) ? @set.radius : ''%>" >
+						<input class="search-query" type="text" placeholder='e.g. "5"' id="set_radius" name="set[radius]" value="<%=(@set) ? @set.radius : ''%>" >
 						<input class="btn btn-primary" type="submit" value="Search">
 	    		</div>
 	    		<%unless flash[:errors].nil?%>
