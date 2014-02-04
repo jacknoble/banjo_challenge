@@ -12,11 +12,6 @@
 <div class="navbar">
   <div class="navbar-inner">
     <a class="brand" href="#">Banjo Challenge</a>
-    	<%unless flash[:errors].nil?%>
-    		<%[*flash[:errors]].each do |error|%>
-    			<p "font-size: 10px" style="color: red"><%=error%></p>
-    		<%end%>
-    	<%end%>
       <form action="/photo_sets" method = "post" class="navbar-search pull-right">
 	      	<input 
 	      	type="hidden"
@@ -32,6 +27,11 @@
 						<input class="btn btn-primary" type="submit" value="Search">
 	    		</div>
 			</form>
+			<%unless flash[:errors].nil?%>
+    		<%[*flash[:errors]].each do |error|%>
+    			<p style="color: red; margin-left: 500px;"><%=error%></p>
+    		<%end%>
+    	<%end%>
   </div>
 </div>
 
