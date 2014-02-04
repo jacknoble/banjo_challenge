@@ -30,7 +30,7 @@ class PhotoSet < ActiveRecord::Base
       :query_values => {
         :center => "#{self.lat},#{self.lng}",
         :zoom => 11,
-        :size => "400x200",
+        :size => "600x180",
         :sensor => false
       }).to_s
   end

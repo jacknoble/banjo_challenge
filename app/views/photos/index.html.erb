@@ -1,11 +1,10 @@
 <div class="container" style="background: white; border-style: solid; border-color: black;">
 	<div class="row">
-		<div class="col-xs-2 col-xs-offset-2">
+		<div style="margin-left: 50px; padding-bottom: -25px">
 			<%= paginate(@photos) %>
 		</div>
-		<div class="col-xs-2 col-xs-offset-2">
-			<img src="<%=@set.map%>" >
-		</div>
+		<img align="right" style="margin-bottom: 5px; margin-right: 15px; margin-top: -60px" src="<%=@set.map%>" >
+
 	</div>
 	<div class="row">
 		<div class="col-xs-7 col-xs-offset-2">
