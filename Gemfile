@@ -5,11 +5,12 @@ gem 'rails', '3.2.15'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 
 gem 'figaro'
 gem 'addressable'
 gem 'rest-client'
+gem 'kaminari'
 
 group :development, :test do
 	gem 'rspec-rails'

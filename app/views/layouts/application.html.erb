@@ -12,13 +12,21 @@
 <div class="navbar">
   <div class="navbar-inner">
     <a class="brand" href="#">Banjo Challenge</a>
-      <form action="/photos" method = "get" class="navbar-search pull-left" style="display: inline;">
-				<input type="hidden" name="authenticity_toke" value="<%=form_authenticity_token%>"
-				<label for="photo_location">Latitude,logitude:</label>
-				<input class="search-query" type="text" id="photo_location" name="photo[location]">
-				<label for="photo_radius">Search Radius (in meters):</label>
-				<input class="search-query" type="text" id="photo_radius" name="photo[radius]" >
-				<input class="btn btn-primary" type="submit" value="Search">
+
+      <form action="/photos" method = "get" class="navbar-search pull-right">
+	      	<input 
+	      	type="hidden"
+	      	name="authenticity_token"
+	      	value="<%=form_authenticity_token%>">
+		      <div style="display: inline-block">
+						<label for="photo_location">Latitude, logitude:</label>
+						<input class="search-query" type="text" id="photo_location" name="photo[location]" value="<%=@location || ''%>">
+					</div>
+				 	<div style="display: inline-block">
+						<label for="photo_radius">Search Radius (in meters):</label>
+						<input class="search-query" type="text" id="photo_radius" name="photo[radius]" value="<%=@radius || ''%>" >
+						<input class="btn btn-primary" type="submit" value="Search">
+	    		</div>
 			</form>
   </div>
 </div>

@@ -1,55 +1,34 @@
 require 'addressable/uri'
 require 'rest-client'
 class Photo < ActiveRecord::Base
-  attr_accessible :image, :location_name, :location_id
-
+  attr_accessible :image
 
   def self.find_by_coords(photo_params)
   	lat, lng = self.parse_coords(photo_params[:location])
-  	uri = self.create_search_uri(lat,lng,photo_params[:radius])
+  	uri = self.create_media_uri(lat,lng,photo_params[:radius])
   	response = JSON.parse(RestClient.get(uri))
-  	location_ids = response['data'].map {|loc| loc['id']}
   	photos = []
-  	location_ids[0..4].each do |id|
-  		photos.concat(Photo.find_by_location_id(id))
-  	end
-  	photos
-  end
 
-  def self.find_by_location_id(id)
-  	uri = self.location_id_uri(id)
-  	response = JSON.parse(RestClient.get(uri))
-  	photos = []
   	response['data'].each do |photo|
   		image = photo['images']['standard_resolution']
-  		location_name = photo['location']['name']
-  	 	photo =  Photo.new(:image => image, :location_name => location_name, :location_id => id)
-  	 	photos << photo unless photo.nil?
+  	 	photo_object =  Photo.new(:image => image)
+  	 	photos << photo_object
   	end
-  	photos.reject! {|p| p.nil?}
-  	photos
+
+		photos
   end
 
+  
   private
   	def self.parse_coords(location)
-  		coords = location.split(',')
+  		coords = location.split(', ')
   	end
 
-  	def self.location_id_uri(id)
-  		Addressable::URI.new(
-  			:scheme => "https",
-  			:host=> "api.instagram.com",
-  			:path=> "v1/locations/#{id}/media/recent",
-  			:query_values => {
-  				:client_id => ENV["INSTAGRAM_ID"]
-  		}).to_s
-  	end
-
-  	def self.create_search_uri(lat, lng, radius)
+  	def self.create_media_uri(lat, lng, radius)
   		Addressable::URI.new(
 			  :scheme => "https",
 			  :host => "api.instagram.com",
-			  :path => "v1/locations/search",
+			  :path => "v1/media/search",
 			  :query_values => {
 			  	:client_id => ENV["INSTAGRAM_ID"], 
 			  	:lat => lat,
