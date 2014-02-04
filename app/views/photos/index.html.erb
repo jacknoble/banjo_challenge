@@ -1,13 +1,40 @@
-<div class="row">
-	<div style="margin-left: 40px">
-		<%= paginate(@photos) %>
+<div class="container" style="background: white; border-style: solid; border-color: black;">
+	<div class="row">
+		<div class="col-xs-2 col-xs-offset-2">
+			<%= paginate(@photos) %>
+		</div>
+		<div class="col-xs-2 col-xs-offset-2">
+			<img src="<%=@set.map%>" >
+		</div>
 	</div>
-</div>
-<div class="row">
-	<div style="margin-left: 20px">
-		<%@photos.each do |photo|%>
-			<img src="<%=photo.image%>">
-		<%end%>
+	<div class="row">
+		<div class="col-xs-7 col-xs-offset-2">
+			<div id="myCarousel" class="carousel slide" style="margin-left: 25px">
+			  <ol class="carousel-indicators">
+			  	<%@photos.each_index do |photo_index|%>
+						<li 
+							data-target="#myCarousel"
+							data-slide-to="<%=photo_index%>"
+							class=<%="active" if photo_index == 0%>
+							>
+						</li>
+					<%end%>
+			  </ol>
+			  <!-- Carousel items -->
+			  <div class="carousel-inner">
+					<%@photos.each_with_index do |photo, index|%>
+						<div
+							class="<%=(index == 0) ? 'active item' : 'item' %>"
+						>
+						<img style="margin-left: 125px" src="<%=photo.image%>">
+						</div>
+					<%end%>
+			  </div>
+			  <!-- Carousel nav -->
+			  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+			  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+		</div>
 	</div>
 </div>
 

@@ -10,6 +10,10 @@ describe PhotoSet do
       expect(invalid_search).to have_at_least(1).error_on(:lat)
     end
 
+    it "validates presence of map" do
+      expect(invalid_search).to have_at_least(1).error_on(:map)
+    end
+
     it "validates presence of longitude" do
       expect(invalid_search).to have_at_least(1).error_on(:lng)
     end

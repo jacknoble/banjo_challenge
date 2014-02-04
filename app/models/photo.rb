@@ -17,7 +17,6 @@ class Photo < ActiveRecord::Base
   def self.pull_for_set(set)
   	uri = self.create_media_uri(set.lat, set.lng, set.radius)
   	response = JSON.parse(RestClient.get(uri))
-    p response
   	photos = []
   	response['data'].each do |photo|
   		image = photo['images']['standard_resolution']['url']
@@ -40,7 +39,7 @@ class Photo < ActiveRecord::Base
 			  	:client_id => ENV["INSTAGRAM_ID"], 
 			  	:lat => lat,
 			  	:lng => lng,
-			  	:distact => radius.to_i
+			  	:distact => radius.to_i * 1000
 		  }).to_s
   	end
 
