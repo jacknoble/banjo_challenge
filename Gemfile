@@ -15,6 +15,7 @@ gem 'kaminari'
 group :development, :test do
 	gem 'rspec-rails'
 	gem 'debugger'
+	gem 'shoulda-matchers'
 end
 
 

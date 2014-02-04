@@ -3,6 +3,8 @@ require 'rest-client'
 class Photo < ActiveRecord::Base
   attr_accessible :image, :set_id
 
+  validates :image, :set_id, :presence => true 
+
   belongs_to(
   	:set,
   	:class_name => "PhotoSet",
