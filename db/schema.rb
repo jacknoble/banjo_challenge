@@ -11,14 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140201023022) do
+ActiveRecord::Schema.define(:version => 20140204010032) do
+
+  create_table "photo_sets", :force => true do |t|
+    t.string   "location"
+    t.string   "lat"
+    t.string   "lng"
+    t.string   "radius"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "photos", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.string   "location_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "image"
-    t.integer  "location_id"
+    t.integer  "set_id"
   end
+
+  add_index "photos", ["set_id"], :name => "index_photos_on_set_id"
 
 end

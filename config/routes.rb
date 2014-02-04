@@ -1,4 +1,6 @@
 BanjoChallenge::Application.routes.draw do
   root to: "root#root"
-  get "photos" => 'photos#index'
+  resources :photo_sets, :only => [:create] do
+    resources :photos, :only => [:index]
+  end
 end
