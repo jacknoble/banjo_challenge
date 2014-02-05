@@ -40,7 +40,7 @@ class Photo < ActiveRecord::Base
 			  	:client_id => ENV["INSTAGRAM_ID"], 
 			  	:lat => lat,
 			  	:lng => lng,
-			  	:distact => radius.to_i * 1000
+			  	:distance => radius.to_i * 1000
 		  }).to_s
   	end
 
